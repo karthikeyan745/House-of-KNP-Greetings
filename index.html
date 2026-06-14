@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Warm greetings and appreciation cards in English, Tamil, Telugu, and Malayalam.">
+  <title>Warm Greetings</title>
+  <!-- Google Fonts for premium typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Background decorative elements for premium visual appeal -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <!-- Header with Title, Logo, and Language Selector -->
+  <header class="header">
+    <div class="header-left">
+      <h1 class="main-title">Dear You!</h1>
+      <div class="logo-wrapper">
+        <img class="knp-logo" src="images/knp-logo.jpeg" alt="House of KNP Logo">
+      </div>
+    </div>
+    
+    <div class="header-right">
+      <div class="dropdown-container">
+        <button id="lang-btn" class="lang-btn" aria-haspopup="true" aria-expanded="false">
+          <span class="lang-icon">🌐</span>
+          <span class="lang-text">Language</span>
+          <svg class="chevron-icon" viewBox="0 0 24 24" width="16" height="16">
+            <path d="M7 10l5 5 5-5H7z" fill="currentColor" />
+          </svg>
+        </button>
+        <ul id="lang-dropdown" class="dropdown-menu">
+          <li><button class="dropdown-item active" data-lang="en" data-img="images/english.jpg">English</button></li>
+          <li><button class="dropdown-item" data-lang="ta" data-img="images/tamil.jpg">தமிழ் (Tamil)</button></li>
+          <li><button class="dropdown-item" data-lang="te" data-img="images/telugu.jpg">తెలుగు (Telugu)</button></li>
+          <li><button class="dropdown-item" data-lang="ml" data-img="images/malayalam.jpg">മലയാളം (Malayalam)</button></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Area with Centered Greeting Image -->
+  <main class="main-content">
+    <div class="image-card">
+      <div class="image-container" id="image-container">
+        <!-- Dual images for smooth hardware-accelerated cross-fade transitions -->
+        <img id="greeting-primary" class="greeting-img active" src="images/english.jpg" alt="Greeting in English">
+        <img id="greeting-secondary" class="greeting-img" src="" alt="Greeting Transition">
+        
+        <!-- Loading spinner shown during image preload -->
+        <div class="loader" id="loader">
+          <div class="spinner"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>Select your preferred language from the menu above.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

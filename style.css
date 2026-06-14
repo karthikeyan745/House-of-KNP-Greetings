@@ -1,0 +1,434 @@
+/* ==========================================================================
+   Base Styles & Reset
+   ========================================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #10b981; /* Emerald Green */
+  --primary-hover: #059669;
+  --bg-gradient: radial-gradient(circle at 50% 50%, #022c22 0%, #011f18 60%, #01110e 100%); /* Elegant Deep Green Gradient */
+  --text-main: #f0fdf4; /* Soft minty white */
+  --text-muted: #a7f3d0; /* Soft pale mint */
+  --accent-color: #fbbf24; /* Festive Gold Accent */
+  --accent-hover: #f59e0b;
+  --glass-bg: rgba(255, 255, 255, 0.02);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --glass-hover: rgba(255, 255, 255, 0.06);
+  --dropdown-bg: rgba(1, 28, 22, 0.95); /* Deepest green glass dropdown */
+  --font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  font-family: var(--font-family);
+  background: #020617;
+  background-image: var(--bg-gradient);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Ambient glow effects behind content */
+.bg-glow {
+  position: absolute;
+  width: 50vw;
+  height: 50vw;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-glow-1 {
+  background: #059669; /* Emerald glow */
+  top: -10%;
+  left: -10%;
+}
+
+.bg-glow-2 {
+  background: #d97706; /* Gold glow */
+  bottom: -10%;
+  right: -10%;
+}
+
+/* ==========================================================================
+   Header & Navigation
+   ========================================================================== */
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between; /* Space out top-left brand and top-right lang button */
+  align-items: flex-start;
+  padding: 2.5rem 4rem 1rem 4rem; /* Balanced desktop margins */
+  background: transparent;
+  border-bottom: none;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.header-right {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 0.35rem; /* Visually aligns language button with the title text baseline */
+}
+
+.main-title {
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem; /* Balanced spacing below title */
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #f0fdf4 0%, #a7f3d0 50%, #fbbf24 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  user-select: none;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  line-height: 1.1;
+}
+
+.logo-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 0.1rem;
+}
+
+.knp-logo {
+  width: 135px; /* Desktop logo width: 120px–150px */
+  height: auto;
+  object-fit: contain;
+  /* Make the logo background transparent cleanly on our dark green background */
+  mix-blend-mode: screen;
+  filter: invert(1);
+  opacity: 0.95;
+  transition: var(--transition-smooth);
+}
+
+/* ==========================================================================
+   Language Selector Dropdown
+   ========================================================================== */
+.dropdown-container {
+  position: relative;
+}
+
+.lang-btn {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-main);
+  padding: 0.6rem 1.2rem;
+  border-radius: 50px;
+  font-family: var(--font-family);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: var(--transition-smooth);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.lang-btn:hover {
+  background: var(--glass-hover);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.15);
+}
+
+.lang-btn:active {
+  transform: translateY(1px);
+}
+
+.chevron-icon {
+  transition: transform 0.3s ease;
+}
+
+.dropdown-container.open .chevron-icon {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  right: 0;
+  background: var(--dropdown-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 0.5rem;
+  min-width: 200px;
+  list-style: none;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  opacity: 0;
+  transform: translateY(-10px) scale(0.96);
+  pointer-events: none;
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+}
+
+.dropdown-container.open .dropdown-menu {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.dropdown-item {
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  text-align: left;
+  padding: 0.7rem 1.1rem;
+  border-radius: 10px;
+  font-family: var(--font-family);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-main);
+}
+
+.dropdown-item.active {
+  background: rgba(16, 185, 129, 0.15); /* Emerald tint */
+  color: #a7f3d0;
+  font-weight: 500;
+}
+
+.dropdown-item.active::after {
+  content: "✓";
+  font-size: 0.85rem;
+  color: var(--accent-color); /* Gold checkmark */
+}
+
+/* ==========================================================================
+   Main Content Area
+   ========================================================================== */
+.main-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 1.5rem 4.5rem 1.5rem; /* Sized down top padding since header is relative */
+  z-index: 1;
+}
+
+.image-card {
+  background: rgba(2, 44, 34, 0.2); /* Soft forest green glass tint */
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 28px;
+  padding: 1rem;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5), 0 0 40px rgba(16, 185, 129, 0.03); /* Subtle green aura */
+  width: fit-content;
+  max-width: 100%;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: transform 0.3s ease;
+  margin: 0 auto;
+}
+
+.image-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 35px 80px rgba(0, 0, 0, 0.6), 0 0 50px rgba(16, 185, 129, 0.05);
+}
+
+.image-container {
+  position: relative;
+  width: 320px; /* Fallback width, updated dynamically by JS to fit image aspect ratio */
+  height: 550px; /* Fallback height, updated dynamically by JS */
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  background: transparent; /* No black bars background */
+  transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1), height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Greeting images positioning and transitions */
+.greeting-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Cover container to prevent flickering or borders during resize transition */
+  border-radius: 18px;
+  opacity: 0;
+  transform: scale(0.99);
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.greeting-img.active {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 2;
+  pointer-events: auto;
+}
+
+/* Loader Styles */
+.loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(9, 13, 22, 0.6);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.loader.show {
+  display: flex;
+  opacity: 1;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top: 3px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.footer {
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  z-index: 1;
+  border-top: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+@media (max-width: 1023px) {
+  .header {
+    padding: 2rem 2.5rem 1rem 2.5rem; /* Balanced tablet padding */
+  }
+}
+
+@media (max-width: 767px) {
+  .header {
+    padding: 1.5rem 1.25rem 0.5rem 1.25rem; /* Mobile layout padding */
+  }
+  
+  .main-title {
+    font-size: 1.6rem;
+    margin-bottom: 0.2rem;
+  }
+  
+  .knp-logo {
+    width: 90px; /* Mobile logo width: 80px–100px */
+  }
+  
+  .lang-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.88rem;
+  }
+  
+  .main-content {
+    padding: 0.5rem 0.5rem 3rem 0.5rem; /* Maximize space on mobile */
+  }
+  
+  .image-card {
+    padding: 0.6rem;
+    border-radius: 20px;
+    width: 100%;
+  }
+  
+  .image-container {
+    border-radius: 12px;
+    width: 100%;
+  }
+  
+  .greeting-img {
+    border-radius: 12px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .main-content {
+    padding: 3rem 1rem 2rem 1rem;
+  }
+}
+
+/* ==========================================================================
+   Desktop View Optimization (min-width: 1024px)
+   ========================================================================== */
+@media (min-width: 1024px) {
+  .header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 2.5rem 5rem 1rem 5rem;
+    z-index: 100;
+    pointer-events: none; /* Let clicks pass through empty header space */
+  }
+
+  .header-left, .header-right {
+    pointer-events: auto; /* Enable clicks on brand elements and dropdown */
+  }
+  
+  .main-content {
+    height: calc(100vh - 67px); /* Fit exactly in viewport, subtracting footer */
+    box-sizing: border-box;
+    padding: 1rem 2.5rem 2rem 2.5rem;
+  }
+  
+  .image-card {
+    padding: 1.25rem;
+    border-radius: 32px;
+    box-shadow: 0 45px 100px rgba(0, 0, 0, 0.65), 0 0 65px rgba(16, 185, 129, 0.04); /* Premium shadow */
+  }
+  
+  .image-container {
+    border-radius: 20px;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55);
+  }
+  
+  .greeting-img {
+    border-radius: 20px;
+    object-fit: contain; /* Do not crop, stretch, or distort */
+  }
+}
